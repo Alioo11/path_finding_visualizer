@@ -16,16 +16,16 @@ nav{
     width: 100%;
 }
 
+
 .board{
     margin: 1rem auto;
-    width: 95%;
-    height: 600px;
+    width: 100%;
     border: solid 3px rgba(0,0,0,0.1);
     display: grid;
-    grid-template-columns: repeat(10,50px);
-    grid-template-rows: repeat(10,50px);
+    width: fit-content;
 }
 .cell{
+    box-shadow: 3px 3px 2px #d3d3d3 inset;
 }
 @media only screen and (max-width: 1250px) {
     html{
