@@ -27,18 +27,29 @@ const parseToCSS = (cssObjectProperty) => {
 }
 
 const createBoard = (width, height) => {
-    board.innerHTML = Array.from(Array.from(Array(width * height).keys()), (item) => `<div id='${item}' class='cell'></div>`).join().replace(/,/g, "")
+    board.innerHTML = Array.from(Array.from(Array(width * height).keys()), (item) => `<div id='${(item % width).toString().length < 2 ? "0" + item % width : item % width}-${Math.floor(item / width).toString().length < 2 ? "0" + Math.floor(item / width).toString() : Math.floor(item / width).toString()}' class='cell'></div>`).join().replace(/,/g, "")
 };
 createBoard(localStorage.getItem("WIDTH"), localStorage.getItem("HEIGHT"))
 
 const cells = document.querySelectorAll('.cell')
 board.style.gridTemplateColumns = `repeat( ${localStorage.getItem("WIDTH")} , ${localStorage.getItem("cellWidth")}px)`
 
+const paint = (coordinants, animationName) => {
+    cells[parseInt(coordinants.slice(0, 2)) + parseInt(coordinants.slice(3, 5)) * localStorage.getItem("WIDTH")].className = "wall"
+}
+
 cells.forEach((item) => {
     item.style = parseToCSS({
         width: `${localStorage.getItem("cellWidth")}px`,
         height: `${localStorage.getItem("cellWidth")}px`
     })
+    item.addEventListener('mouseover', (e) => {
+        paint(e.target.id)
+    })
 })
+
+
+
+
 
 export { cells, board, pathFindingAlgoSpeed, a_startBtn, dijkestraBtn, startBtn }
